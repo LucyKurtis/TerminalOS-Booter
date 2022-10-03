@@ -27,14 +27,47 @@ public class Main {
     }
     //Main Menu Application
     static void mainmenu() throws IOException, InterruptedException, URISyntaxException { // Main Method
+        cls();
         header();
         System.out.println(Color.CYAN_BRIGHT + " | ");
         System.out.println(Color.CYAN_BRIGHT + " |  " + Color.MAGENTA_BRIGHT + "Press H followed by the Enter key for help!");
         System.out.println(Color.CYAN_BRIGHT + " | ");
         System.out.println(Color.CYAN_BRIGHT + " | " + Color.RESET + " N > Normal Boot");
         System.out.println(Color.CYAN_BRIGHT + " | " + Color.RESET + " E > Experimental Boot");
+        System.out.println(Color.CYAN_BRIGHT + " | " + Color.RESET + " C > Custom Boot");
         System.out.println(Color.CYAN_BRIGHT + " | ");
         System.out.println(Color.CYAN_BRIGHT + " | " + Color.RESET + " R > Enter Update Enviornment");
+        System.out.println(Color.CYAN_BRIGHT + " | ");
+        Scanner Input = new Scanner(System.in);  // Create a Scanner object
+        System.out.println(Color.CYAN_BRIGHT + " |_  " + Color.RESET + Color.BLUE_BACKGROUND + "Type here:");
+        System.out.println(Color.BLUE_BRIGHT);
+        String rawuserinput = Input.next(); // Read user input
+        String userinput = rawuserinput.replaceAll("\\s", "\\\\ "); // End Scanner Object
+        System.out.println(Color.RESET);
+        String Normal = "N";
+        String Experimental = "E";
+        if (userinput.equals(Normal)) {
+            Normal();
+            mainmenu();
+        } else if (userinput.equals(Experimental)) {
+            Expirimental();
+            mainmenu();
+        } else {
+            mainmenu();
+        }
+    }
+    static void help() {
+        header();
+        System.out.println(Color.CYAN_BRIGHT + " | ");
+        System.out.println(Color.CYAN_BRIGHT + " | ");
+        System.out.println(Color.CYAN_BRIGHT + " | ");
+        System.out.println(Color.CYAN_BRIGHT + " | ");
+        System.out.println(Color.CYAN_BRIGHT + " | ");
+        System.out.println(Color.CYAN_BRIGHT + " | ");
+        System.out.println(Color.CYAN_BRIGHT + " | ");
+        System.out.println(Color.CYAN_BRIGHT + " | ");
+        System.out.println(Color.CYAN_BRIGHT + " | ");
+        System.out.println(Color.CYAN_BRIGHT + " | ");
         System.out.println(Color.CYAN_BRIGHT + " | ");
         Scanner Input = new Scanner(System.in);  // Create a Scanner object
         System.out.println(Color.CYAN_BRIGHT + " |_  " + Color.RESET + Color.BLUE_BACKGROUND + "Type here:");
@@ -43,22 +76,50 @@ public class Main {
         String userinput = rawuserinput.replaceAll("\\s", "\\\\ "); // End Scanner Object
         System.out.println(Color.RESET);
     }
-    static void help() {
-        header();
-        System.out.println(Color.CYAN_BRIGHT + " | " + Color.MAGENTA + " Welcome to the TerminalOS Booter");
-        System.out.println(Color.CYAN_BRIGHT + " |  " + Color.MAGENTA_BRIGHT + "Press H followed by the Enter key for help!");
-        System.out.println(Color.CYAN_BRIGHT + " | ");
-        System.out.println(Color.CYAN_BRIGHT + " | " + Color.RESET + " N > Normal Boot");
-        System.out.println(Color.CYAN_BRIGHT + " | " + Color.RESET + " E > Experimental Boot");
-        System.out.println(Color.CYAN_BRIGHT + " | ");
-        System.out.println(Color.CYAN_BRIGHT + " | " + Color.RESET + " R > Enter Update Enviornment");
-        System.out.println(Color.CYAN_BRIGHT + " | ");
-        Scanner Input = new Scanner(System.in);  // Create a Scanner object
-        System.out.println(Color.CYAN_BRIGHT + " |_  " + Color.RESET + Color.BLUE_BACKGROUND + "Type here:");
-        System.out.println(Color.BLUE_BRIGHT);
-        String rawuserinput = Input.next(); // Read user input
-        String userinput = rawuserinput.replaceAll("\\s", "\\\\ "); // End Scanner Object
-        System.out.println(Color.RESET);
+    //boot types
+    static void Normal() throws IOException, URISyntaxException, InterruptedException {
+        String homeFolder = System.getProperty("user.home");
+        final String os = System.getProperty("os.name");
+        if (os.contains("Windows")) {
+            try {
+                new ProcessBuilder("cmd", "/c", "java -jar \"" + homeFolder + "\\TerminalOS\\OS\\SystemImages\\Release\\TerminalOS.image").inheritIO().start().waitFor();
+                System.out.print(Color.RESET);
+                mainmenu();
+            } catch (Exception e) {
+                mainmenu();
+            }
+        } else {
+            try {
+                ProcessBuilder processBuilder = new ProcessBuilder();
+                processBuilder.command("bash", "-c", "java -jar " + homeFolder + "/TerminalOS/OS/SystemImages/Release/TerminalOS.image").inheritIO().start().waitFor();
+                System.out.print(Color.RESET);
+                mainmenu();
+            } catch (Exception e) {
+                mainmenu();
+            }
+        }
+    }
+    static void Expirimental() throws IOException, URISyntaxException, InterruptedException {
+        String homeFolder = System.getProperty("user.home");
+        final String os = System.getProperty("os.name");
+        if (os.contains("Windows")) {
+            try {
+                new ProcessBuilder("cmd", "/c", "java -jar \"" + homeFolder + "\\TerminalOS\\OS\\SystemImages\\BleedingEdge\\TerminalOS.image").inheritIO().start().waitFor();
+                System.out.print(Color.RESET);
+                mainmenu();
+            } catch (Exception e) {
+                mainmenu();
+            }
+        } else {
+            try {
+                ProcessBuilder processBuilder = new ProcessBuilder();
+                processBuilder.command("bash", "-c", "java -jar " + homeFolder + "/TerminalOS/OS/SystemImages/BleedingEdge/TerminalOS.image").inheritIO().start().waitFor();
+                System.out.print(Color.RESET);
+                mainmenu();
+            } catch (Exception e) {
+                mainmenu();
+            }
+        }
     }
 
     // -- LIBRARIES --
